@@ -2,7 +2,7 @@
 
 Необходимо создать React-компонент ShopItemClass (class-based компонент), с помощью которого мы могли бы реализовывать представление информации о товарах из нашего каталога на сайте в таком виде (компонент обведён пунктирной линией):
 
-![](/public/preview.png)
+![]([/public/preview.png](https://github.com/danroman-github/ra-homeworks/blob/main/ra-store-class/my-vite-project/public/preview.png))
 
 ### Легенда
 
