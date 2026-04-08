@@ -4,24 +4,61 @@
 
 ![](https://github.com/danroman-github/ra-homeworks/blob/main/ra-store-class/my-vite-project/public/preview.png)
 
-### Легенда
+### Пример использования
 
-Вам пришла задача: сделать виджет, позволяющий вводить номер карты (можете в качестве общего развития почитать про PCI DSS).
+```
+const item = {
+  brand: 'Tiger of Sweden',
+  title: 'Leonard coat',
+  description: 'Minimalistic coat in cotton-blend',
+  descriptionFull: 'Men\'s minimalistic overcoat in cotton-blend. Features a stand-up collar, concealed front closure and single back vent. Slim fit with clean, straight shape. Above-knee length.',
+  price: 399,
+  currency: '£'
+}
 
-Общий вид виджета должен выглядеть следующим образом:
+// Внутри компонента App
+return (
+  <div className="container">
+    <div className="background-element">
+    </div>
+    <div className="highlight-window">
+      <div className='highlight-overlay'></div>
+    </div>
+    <div className="window">
+      <ShopItemClass item={item} />
+    </div>
+  </div>
+)
+```
 
-![](https://github.com/danroman-github/ahj-testing/blob/main/src/img/validator.png)
+### Описание компонента
 
-Нужно провести исследовательскую работу и выяснить - на базе чего определяется, какой платёжной системе принадлежит определённая карта (не забудьте про "Мир").
+Компонент должен иметь один props item, в котором он ожидает объект с информацией о товаре со следующими свойствами:
 
-### Описание
+- brand — название производителя товара;
+- title — название товара;
+- description — краткое описание товара;
+- descriptionFull — подробное описание товара;
+- price — цена товара;
+- currency — валюта товара.
 
-Используйте [следующий алгоритм](https://en.wikipedia.org/wiki/Luhn_algorithm) для проверки валидности номера карты.
+Компонент должен создавать DOM элемент следующей структуры:
 
-Изображения для карт необходимо найти самостоятельно (помните, про авторские права и недопустимость нелегального использования). Обычно информацию об использованных изображениях размещают в файле licenses.txt и кладут в корень сайта (настройте для этого соответствующим образом Webpack).
+```
+<div class="main-content">
+  <h2>Tiger of Sweden</h2>
+  <h1>Leonard coat</h1>
+  <h3>Minimalistic coat in cotton-blend</h3>
+  <div class="description">
+    Men's minimalistic overcoat in cotton-blend. Features a stand-up collar, concealed front closure and single back vent. Slim fit with clean, straight shape. Above-knee length.
+  </div>
+  <div class="highlight-window mobile"><div class="highlight-overlay"></div></div>
+  <div class="divider"></div>
+  <div class="purchase-info">
+    <div class="price">£399.00</div>
+    <button>Добавить в корзину</button>
+  </div>
+</div>
+```
 
-Разделите логику проверки номера карты, выяснения принадлежности определённой платёжной системе и взаимодействия с DOM.
-
-Напишите авто-тесты на функции проверки номера карты и принадлежности определённой платёжной системе.
-
-В качестве источника номеров карт используйте сервис [FreeFormatter](https://www.freeformatter.com/credit-card-number-generator-validator.html).
+Соответственно название производителя необходимо подставить в h2, название товара в h1, краткое описание в h3, подробное описание в div.description, цену и валюту в div.price. При этом символ валюты должен следовать перед ценой, а цена должна быть представлена с двумя числами после запятой.
