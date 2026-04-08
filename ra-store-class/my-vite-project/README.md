@@ -1,16 +1,27 @@
-# React + Vite
+# Задание «Страница интернет-магазина»
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Необходимо создать React-компонент ShopItemClass (class-based компонент), с помощью которого мы могли бы реализовывать представление информации о товарах из нашего каталога на сайте в таком виде (компонент обведён пунктирной линией):
 
-Currently, two official plugins are available:
+![](/public/preview.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Легенда
 
-## React Compiler
+Вам пришла задача: сделать виджет, позволяющий вводить номер карты (можете в качестве общего развития почитать про PCI DSS).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Общий вид виджета должен выглядеть следующим образом:
 
-## Expanding the ESLint configuration
+![](https://github.com/danroman-github/ahj-testing/blob/main/src/img/validator.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Нужно провести исследовательскую работу и выяснить - на базе чего определяется, какой платёжной системе принадлежит определённая карта (не забудьте про "Мир").
+
+### Описание
+
+Используйте [следующий алгоритм](https://en.wikipedia.org/wiki/Luhn_algorithm) для проверки валидности номера карты.
+
+Изображения для карт необходимо найти самостоятельно (помните, про авторские права и недопустимость нелегального использования). Обычно информацию об использованных изображениях размещают в файле licenses.txt и кладут в корень сайта (настройте для этого соответствующим образом Webpack).
+
+Разделите логику проверки номера карты, выяснения принадлежности определённой платёжной системе и взаимодействия с DOM.
+
+Напишите авто-тесты на функции проверки номера карты и принадлежности определённой платёжной системе.
+
+В качестве источника номеров карт используйте сервис [FreeFormatter](https://www.freeformatter.com/credit-card-number-generator-validator.html).
