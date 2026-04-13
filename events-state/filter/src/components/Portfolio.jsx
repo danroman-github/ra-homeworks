@@ -4,22 +4,22 @@ import { ProjectList } from './ProjectList';
 
 const projects = [
     { img: "src/img/mon.jpg", category: "Business Cards" },
-    { img: "src/img/200.jpg", category: "Business Cards" },
+    { img: "src/img/200.jpg", category: "Websites" },
     { img: "src/img/emi_haze.jpg", category: "Websites" },
     { img: "src/img/codystretch.jpg", category: "Websites" },
-    { img: "src/img/Triangle_003.jpg", category: "Flayers" },
+    { img: "src/img/Triangle_003.jpg", category: "Business Cards" },
     { img: "src/img/place200x290.png", category: "Websites" },
-    { img: "src/img/200.jpg", category: "Business Cards" },
+    { img: "src/img/200.jpg", category: "Websites" },
     { img: "src/img/transmission.jpg", category: "Business Cards" },
     { img: "src/img/place200x290_1.png", category: "Websites" },
     { img: "src/img/place200x290_2.png", category: "Flayers" },
     { img: "src/img/the_ninetys_brand.jpg", category: "Websites" },
-    { img: "src/img/dia.jpg", category: "Flayers" },
+    { img: "src/img/dia.jpg", category: "Business Cards" },
     { img: "src/img/Triangle_350x197.jpg", category: "Websites" },
     { img: "src/img/emi_haze.jpg", category: "Websites" },
     { img: "src/img/transmission.jpg", category: "Business Cards" },
-    { img: "src/img/Triangle_350x197_1.jpg", category: "Business Cards" },
-    { img: "src/img/place200x290_2.png", category: "Business Cards" }
+    { img: "src/img/Triangle_350x197_1.jpg", category: "Websites" },
+    { img: "src/img/place200x290_3.png", category: "Flayers" }
 ];
 
 const getUniqueCategories = () => {
