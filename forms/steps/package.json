@@ -1,8 +1,8 @@
 {
-  "name": "hex2rgb",
+  "name": "steps",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/danroman-github/ra-homeworks/tree/main/forms/hex2rgb",
+  "repository": "https://github.com/danroman-github/ra-homeworks/tree/main/forms/steps",
   "author": "danroman",
   "license": "MIT",
   "scripts": {
