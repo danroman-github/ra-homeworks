@@ -59,12 +59,10 @@ const ColorConverter = () => {
             const rgbString = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
             setRgbValue(rgbString);
             setBackgroundColor(hexValue);
-            document.body.style.backgroundColor = hexValue;
         } else {
             setIsError(true);
             setRgbValue('Ошибка!');
             setBackgroundColor('#ff0000');
-            document.body.style.backgroundColor = '#ff0000';
         }
     }, [hexValue, hexToRgb]);
 
@@ -73,7 +71,6 @@ const ColorConverter = () => {
             setIsError(true);
             setRgbValue('Ошибка!');
             setBackgroundColor('#ff0000');
-            document.body.style.backgroundColor = '#ff0000';
         }
     };
 
