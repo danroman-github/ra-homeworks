@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { formatDisplayDate } from '../utils/dateUtils';
 
 interface TrainingFormProps {
     onSubmit: (date: string, distance: number) => void;
@@ -24,19 +23,26 @@ export const TrainingForm: React.FC<TrainingFormProps> = ({
 
     useEffect(() => {
         if (editDate && editDistance !== null) {
-            setDate(formatDisplayDate(editDate));
+            setDate(editDate);
             setDistance(editDistance.toString());
         }
     }, [editDate, editDistance]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
         e.preventDefault();
 
-        if (!date || !distance) return;
-        const [day, month, year] = date.split('.');
-        const formattedDate = `${year}-${month}-${day}`;
+        if (!date || !distance) {
+            alert('Пожалуйста, заполните все поля');
+            return;
+        }
 
-        onSubmit(formattedDate, parseFloat(distance));
+        const distanceNum = parseFloat(distance);
+        if (isNaN(distanceNum) || distanceNum <= 0) {
+            alert('Пожалуйста, введите корректное расстояние (больше 0)');
+            return;
+        }
+
+        onSubmit(date, distanceNum);
 
         if (!editDate) {
             clearForm();
@@ -56,13 +62,16 @@ export const TrainingForm: React.FC<TrainingFormProps> = ({
             <div className="form-row">
                 <div className="form-group">
                     <label htmlFor="date">Дата (ДД.ММ.ГГГГ)</label>
-                    <input
-                        type="text"
-                        id="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        required
-                    />
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <input
+                            type="date"
+                            id="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            required
+                            style={{ flex: 1 }}
+                        />
+                    </div>
                 </div>
 
                 <div className="form-group">

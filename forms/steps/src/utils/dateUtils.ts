@@ -1,5 +1,5 @@
-// Конвертация YYYY-MM-DD -> DD.MM.YYYY
-export const formatDisplayDate = (dateStr: string): string => {
-    const [year, month, day] = dateStr.split('-');
+export const toDisplayFormat = (isoDate: string): string => {
+    if (!isoDate) return '';
+    const [year, month, day] = isoDate.split('-');
     return `${day}.${month}.${year}`;
 };

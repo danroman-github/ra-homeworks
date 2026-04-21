@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TrainingForm } from './components/TrainingForm';
 import { TrainingTable } from './components/TrainingTable';
 import { Training } from './types';
-import { formatDisplayDate } from './utils/dateUtils';
+import { toDisplayFormat } from './utils/dateUtils';
 import './App.css';
 
 const App: React.FC = () => {
@@ -33,7 +33,7 @@ const App: React.FC = () => {
         if (training.date === editDate) {
           return {
             date,
-            displayDate: formatDisplayDate(date),
+            displayDate: toDisplayFormat(date),
             distance
           };
         }
@@ -65,7 +65,7 @@ const App: React.FC = () => {
       } else {
         const newTraining: Training = {
           date,
-          displayDate: formatDisplayDate(date),
+          displayDate: toDisplayFormat(date),
           distance
         };
 
