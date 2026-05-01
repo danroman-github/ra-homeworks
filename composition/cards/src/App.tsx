@@ -1,12 +1,11 @@
 // App.jsx
-import React from 'react';
-import { Portfolio } from './components/Portfolio';
+import CardShowing from './components/CardShowing';
 import './App.css';
 
 export function App() {
   return (
     <div className="app">
-      <Portfolio />
+      <CardShowing />
     </div>
   );
 }
