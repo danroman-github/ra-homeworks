@@ -1,0 +1,23 @@
+.button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid black;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.button:hover:not(:disabled) {
+    background-color: #ffffff;
+    transform: rotate(180deg);
+}
+
+.button:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+}
