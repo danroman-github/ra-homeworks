@@ -1,0 +1,33 @@
+.user-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.user-item {
+    padding: 14px 18px;
+    background: white;
+    cursor: pointer;
+    border: 1px solid rgb(205, 205, 205);
+    color: #333;
+    font-weight: 500;
+}
+
+li:not(:first-child) {
+    border-top: none;
+}
+
+.user-item:hover {
+    background: #f0f0f0;
+    border-color: #667eea;
+}
+
+.user-item.active {
+    background: #667eea;
+    color: rgb(255, 255, 255);
+    border-color: #667eea;
+}
+
+.user-item.active:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
+}
