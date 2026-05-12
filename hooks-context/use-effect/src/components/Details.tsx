@@ -3,13 +3,16 @@ import { DetailsProps, UserDetails } from '../types';
 import '../styles/Details.css';
 
 const DETAILS_BASE_URL = 'https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data';
+const AVATAR_TIMEOUT = 15000;
 
 const Details: React.FC<DetailsProps> = ({ info }) => {
     const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [avatarLoaded, setAvatarLoaded] = useState<boolean>(false);
-    const imgRef = useRef<HTMLImageElement>(null);
+    const [avatarError, setAvatarError] = useState<boolean>(false);
+    const imgRef = useRef<HTMLImageElement | null>(null);
+    const avatarTimeoutRef = useRef<number | null>(null);
 
     useEffect(() => {
         if (!info || !info.id) {
@@ -17,62 +20,95 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
             setError(null);
             setLoading(false);
             setAvatarLoaded(false);
+            setAvatarError(false);
+            if (avatarTimeoutRef.current) {
+                clearTimeout(avatarTimeoutRef.current);
+                avatarTimeoutRef.current = null;
+            }
             return;
         }
 
         let isMounted = true;
-
-        const fetchUserDetails = async (): Promise<void> => {
+        const fetchUserDetails = async () => {
             try {
                 setLoading(true);
                 setError(null);
                 setAvatarLoaded(false);
+                setAvatarError(false);
+                if (avatarTimeoutRef.current) {
+                    clearTimeout(avatarTimeoutRef.current);
+                    avatarTimeoutRef.current = null;
+                }
 
                 const response = await fetch(`${DETAILS_BASE_URL}/${info.id}.json`);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data: UserDetails = await response.json();
-
-                console.log(data);
-
-                if (isMounted) {
-                    setUserDetails(data);
-                }
+                if (isMounted) setUserDetails(data);
             } catch (err) {
                 if (isMounted) {
                     setError(err instanceof Error ? err.message : 'Failed to load user details');
                     setUserDetails(null);
                 }
             } finally {
-                if (isMounted) {
-                    setLoading(false);
-                }
+                if (isMounted) setLoading(false);
             }
         };
-
         fetchUserDetails();
-
         return () => {
             isMounted = false;
+            if (avatarTimeoutRef.current) {
+                clearTimeout(avatarTimeoutRef.current);
+                avatarTimeoutRef.current = null;
+            }
         };
     }, [info?.id]);
 
     useEffect(() => {
-        if (imgRef.current && imgRef.current.complete) {
-            setAvatarLoaded(true);
+        if (userDetails && userDetails.avatar && !avatarLoaded && !avatarError) {
+            if (avatarTimeoutRef.current) {
+                clearTimeout(avatarTimeoutRef.current);
+                avatarTimeoutRef.current = null;
+            }
+
+            avatarTimeoutRef.current = setTimeout(() => {
+                if (!avatarLoaded && !avatarError) {
+                    setAvatarError(true);
+                    setAvatarLoaded(false);
+                    if (imgRef.current) {
+                        imgRef.current.src = '';
+                    }
+                }
+                avatarTimeoutRef.current = null;
+            }, AVATAR_TIMEOUT);
+
+            const timer = setTimeout(() => {
+                if (imgRef.current && userDetails.avatar) {
+                    imgRef.current.src = userDetails.avatar;
+                }
+            }, 2000);
+
+            return () => {
+                clearTimeout(timer);
+            };
         }
-    }, [userDetails]);
+    }, [userDetails, avatarLoaded, avatarError]);
 
     const handleAvatarLoad = () => {
+        if (avatarTimeoutRef.current) {
+            clearTimeout(avatarTimeoutRef.current);
+            avatarTimeoutRef.current = null;
+        }
         setAvatarLoaded(true);
+        setAvatarError(false);
     };
 
-    const handleAvatarError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-        setAvatarLoaded(true);
-        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300?text=No+Avatar';
+    const handleAvatarError = () => {
+        if (avatarTimeoutRef.current) {
+            clearTimeout(avatarTimeoutRef.current);
+            avatarTimeoutRef.current = null;
+        }
+        setAvatarError(true);
+        setAvatarLoaded(false);
     };
 
     if (loading) {
@@ -115,40 +151,47 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
     return (
         <div className="details-card">
             <div className="details-avatar">
-                {!avatarLoaded && (
+                {!avatarLoaded && !avatarError && (
                     <div className="avatar-loading">
                         <div className="avatar-spinner"></div>
+                        <p>Loading image...</p>
                     </div>
                 )}
-                <img
-                    ref={imgRef}
-                    src={userDetails.avatar}
-                    alt={`${userDetails.name}'s avatar`}
-                    onLoad={handleAvatarLoad}
-                    onError={handleAvatarError}
-                    style={{
-                        display: avatarLoaded ? 'block' : 'none',
-                        opacity: avatarLoaded ? 1 : 0,
-                        transition: 'opacity 0.3s ease'
-                    }}
-                />
+
+                {avatarError && (
+                    <div className="avatar-error">
+                        <p>⚠️ Failed to load avatar</p>
+                    </div>
+                )}
+
+                {userDetails.avatar && (
+                    <img
+                        ref={imgRef}
+                        src={userDetails.avatar}
+                        alt={`${userDetails.name}'s avatar`}
+                        onLoad={handleAvatarLoad}
+                        onError={handleAvatarError}
+                        style={{ display: avatarLoaded && !avatarError ? 'block' : 'none' }}
+                    />
+                )}
+
+                {!userDetails.avatar && !avatarError && (
+                    <div className="avatar-error">
+                        <p>⚠️ No avatar URL provided</p>
+                    </div>
+                )}
             </div>
 
             <div className="details-info">
-                <div className="details-field">
-                    <h3>{userDetails.name}</h3>
-                </div>
-
+                <h3>{userDetails.name}</h3>
                 <div className="details-field">
                     <span className="details-label">City:</span>
                     <span className="details-value">{userDetails.details.city}</span>
                 </div>
-
                 <div className="details-field">
                     <span className="details-label">Company:</span>
                     <span className="details-value">{userDetails.details.company}</span>
                 </div>
-
                 <div className="details-field">
                     <span className="details-label">Position:</span>
                     <span className="details-value">{userDetails.details.position}</span>

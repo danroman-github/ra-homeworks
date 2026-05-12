@@ -4,8 +4,9 @@ export interface User {
 }
 
 export interface UserDetails extends User {
+    id: number;
     name: string;
-    avatar: string;
+    avatar?: string;
     details: {
         city: string;
         company: string;
