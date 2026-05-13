@@ -13,6 +13,13 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
     const [avatarError, setAvatarError] = useState<boolean>(false);
     const imgRef = useRef<HTMLImageElement | null>(null);
     const avatarTimeoutRef = useRef<number | null>(null);
+    const loadDelayRef = useRef<number | null>(null);
+
+    const getUniqueAvatarUrl = (avatarUrl: string): string => {
+        const timestamp = Date.now();
+        const separator = avatarUrl.includes('?') ? '&' : '?';
+        return `${avatarUrl}${separator}_nocache=${timestamp}`;
+    };
 
     useEffect(() => {
         if (!info || !info.id) {
@@ -25,6 +32,13 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
                 clearTimeout(avatarTimeoutRef.current);
                 avatarTimeoutRef.current = null;
             }
+            if (loadDelayRef.current) {
+                clearTimeout(loadDelayRef.current);
+                loadDelayRef.current = null;
+            }
+            if (imgRef.current) {
+                imgRef.current.src = '';
+            }
             return;
         }
 
@@ -35,15 +49,35 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
                 setError(null);
                 setAvatarLoaded(false);
                 setAvatarError(false);
+
                 if (avatarTimeoutRef.current) {
                     clearTimeout(avatarTimeoutRef.current);
                     avatarTimeoutRef.current = null;
+                }
+                if (loadDelayRef.current) {
+                    clearTimeout(loadDelayRef.current);
+                    loadDelayRef.current = null;
+                }
+                if (imgRef.current) {
+                    imgRef.current.src = '';
                 }
 
                 const response = await fetch(`${DETAILS_BASE_URL}/${info.id}.json`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data: UserDetails = await response.json();
-                if (isMounted) setUserDetails(data);
+                if (isMounted) {
+                    setUserDetails(data);
+
+                    if (data.avatar) {
+                        loadDelayRef.current = window.setTimeout(() => {
+                            if (isMounted && imgRef.current && data.avatar) {
+                                const uniqueAvatarUrl = getUniqueAvatarUrl(data.avatar);
+                                imgRef.current.src = uniqueAvatarUrl;
+                            }
+                            loadDelayRef.current = null;
+                        }, 2000);
+                    }
+                }
             } catch (err) {
                 if (isMounted) {
                     setError(err instanceof Error ? err.message : 'Failed to load user details');
@@ -53,24 +87,25 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
                 if (isMounted) setLoading(false);
             }
         };
+
         fetchUserDetails();
+
         return () => {
             isMounted = false;
             if (avatarTimeoutRef.current) {
                 clearTimeout(avatarTimeoutRef.current);
                 avatarTimeoutRef.current = null;
             }
+            if (loadDelayRef.current) {
+                clearTimeout(loadDelayRef.current);
+                loadDelayRef.current = null;
+            }
         };
     }, [info?.id]);
 
     useEffect(() => {
-        if (userDetails && userDetails.avatar && !avatarLoaded && !avatarError) {
-            if (avatarTimeoutRef.current) {
-                clearTimeout(avatarTimeoutRef.current);
-                avatarTimeoutRef.current = null;
-            }
-
-            avatarTimeoutRef.current = setTimeout(() => {
+        if (!avatarLoaded && !avatarError && userDetails?.avatar) {
+            avatarTimeoutRef.current = window.setTimeout(() => {
                 if (!avatarLoaded && !avatarError) {
                     setAvatarError(true);
                     setAvatarLoaded(false);
@@ -80,18 +115,15 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
                 }
                 avatarTimeoutRef.current = null;
             }, AVATAR_TIMEOUT);
-
-            const timer = setTimeout(() => {
-                if (imgRef.current && userDetails.avatar) {
-                    imgRef.current.src = userDetails.avatar;
-                }
-            }, 2000);
-
-            return () => {
-                clearTimeout(timer);
-            };
         }
-    }, [userDetails, avatarLoaded, avatarError]);
+
+        return () => {
+            if (avatarTimeoutRef.current) {
+                clearTimeout(avatarTimeoutRef.current);
+                avatarTimeoutRef.current = null;
+            }
+        };
+    }, [userDetails?.avatar, avatarLoaded, avatarError]);
 
     const handleAvatarLoad = () => {
         if (avatarTimeoutRef.current) {
@@ -167,7 +199,6 @@ const Details: React.FC<DetailsProps> = ({ info }) => {
                 {userDetails.avatar && (
                     <img
                         ref={imgRef}
-                        src={userDetails.avatar}
                         alt={`${userDetails.name}'s avatar`}
                         onLoad={handleAvatarLoad}
                         onError={handleAvatarError}
