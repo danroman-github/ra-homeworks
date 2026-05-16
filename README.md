@@ -23,3 +23,7 @@
 2.4. [hooks, Context API](/hooks-context)
 
 2.5. [React Router](/router)
+
+### Блок 3. Redux — управление состоянием
+
+3.1 [Redux](/redux)
