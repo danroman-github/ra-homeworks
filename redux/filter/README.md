@@ -73,7 +73,7 @@ interface RootState {
 
 ### Дополнительные Actions
 
-```ruby
+```typescript
 // Управление фильтром
 SET_SEARCH_TERM  // { searchTerm: string }
 CLEAR_SEARCH     // void
@@ -81,7 +81,7 @@ CLEAR_SEARCH     // void
 
 ### Селекторы для производных данных
 
-```ruby
+```typescript
 import { createSelector } from 'redux'; // npm install reselect
 
 // Селектор для фильтрации услуг
