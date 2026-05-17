@@ -125,10 +125,10 @@ export const selectFilterStats = createSelector(
   
 ## Подсказки по реализации
 
-1. Селекторы: используйте createSelector из библиотеки reselect для мемоизации
-2. Поиск: string.toLowerCase().includes() для поиска без учета регистра
-3. Статистика: вычисляйте через селектор, а не храните в state
-4. Debounce: используйте setTimeout/clearTimeout или библиотеку lodash.debounce
+1. **Селекторы**: используйте createSelector из библиотеки reselect для мемоизации
+2. **Поиск**: string.toLowerCase().includes() для поиска без учета регистра
+3. **Статистика**: вычисляйте через селектор, а не храните в state
+4. **Debounce**: используйте setTimeout/clearTimeout или библиотеку lodash.debounce
    
 ## Дополнительные задачи (необязательно)
 
