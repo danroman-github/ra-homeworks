@@ -21,7 +21,7 @@ npm run dev
 
 #### Поиск и фильтрация:
 
-[ ] Поле поиска над списком услуг с плейсхолдером "Поиск услуг..."
+[] Поле поиска над списком услуг с плейсхолдером "Поиск услуг..."
 [ ] Фильтрация по названию услуги (поиск без учета регистра)
 [ ] Поиск в реальном времени (фильтрация при каждом вводе символа)
 [ ] Кнопка очистки поиска (✕) справа от поля
@@ -51,7 +51,7 @@ npm run dev
 
 ### Расширенная структура состояния
 
-`
+```
 interface RootState {
   services: {
     items: Service[];
@@ -69,19 +69,19 @@ interface RootState {
     };
   };
 }
-`
+```
 
 ### Дополнительные Actions
 
-`
+```
 // Управление фильтром
 SET_SEARCH_TERM  // { searchTerm: string }
 CLEAR_SEARCH     // void
-`
+```
 
 ### Селекторы для производных данных
 
-`
+```
 import { createSelector } from 'redux'; // npm install reselect
 
 // Селектор для фильтрации услуг
@@ -105,7 +105,7 @@ export const selectFilterStats = createSelector(
     total: allServices.length
   })
 );
-`
+```
 
 ## Анализ существующих решений
 
@@ -122,7 +122,7 @@ export const selectFilterStats = createSelector(
 - Сохранение состояния фильтра при навигации
 - Очистка фильтра одним кликом
 - Показ количества результатов
-- 
+  
 ## Подсказки по реализации
 
 1. Селекторы: используйте createSelector из библиотеки reselect для мемоизации
@@ -140,10 +140,10 @@ export const selectFilterStats = createSelector(
  
 ## Структура компонентов
 
-`
+```
 components/
 ├── ServiceList.tsx      // отображает отфильтрованный список
 ├── ServiceForm.tsx      // форма добавления/редактирования
 ├── SearchFilter.tsx     // поле поиска с очисткой
 └── FilterStats.tsx      // статистика "Найдено X из Y"
-`
+```
