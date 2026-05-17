@@ -51,7 +51,7 @@ npm run dev
 
 ### Расширенная структура состояния
 
-```ruby
+```typescript
 interface RootState {
   services: {
     items: Service[];
