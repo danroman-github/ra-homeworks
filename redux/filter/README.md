@@ -51,7 +51,7 @@ npm run dev
 
 ### Расширенная структура состояния
 
-```
+```ruby
 interface RootState {
   services: {
     items: Service[];
@@ -73,7 +73,7 @@ interface RootState {
 
 ### Дополнительные Actions
 
-```
+```ruby
 // Управление фильтром
 SET_SEARCH_TERM  // { searchTerm: string }
 CLEAR_SEARCH     // void
@@ -81,7 +81,7 @@ CLEAR_SEARCH     // void
 
 ### Селекторы для производных данных
 
-```
+```ruby
 import { createSelector } from 'redux'; // npm install reselect
 
 // Селектор для фильтрации услуг
