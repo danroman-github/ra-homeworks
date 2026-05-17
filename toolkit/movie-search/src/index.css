@@ -1,0 +1,33 @@
+:root {
+  --primary-color: #cececf;
+  --secondary-color: #777777;
+  --error-color: #ff6b6b;
+  --success-color: #51cf66;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #cececf 0%, #777777 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

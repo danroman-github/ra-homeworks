@@ -1,0 +1,90 @@
+.homePage {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #cececf 0%, #777777 100%);
+}
+
+.hero {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.title {
+    font-size: 48px;
+    color: rgb(87, 87, 87);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.searchForm {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+}
+
+.searchInput {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.searchBtn {
+    padding: 14px 28px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-weight: 600;
+}
+
+.searchBtn:hover {
+    background: #ff5252;
+}
+
+.results {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.resultsInfo {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+.moviesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.skeletonGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.noResults,
+.welcome {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+}
+
+.noResults p,
+.welcome p {
+    margin: 10px 0;
+    font-size: 18px;
+}
