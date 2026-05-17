@@ -8,12 +8,12 @@
 
 Создайте новый проект или используйте готовое решение из задания [editing](https://github.com/netology-code/ra16-homeworks/blob/ra-new/redux/editing):
 
-`
+```
 npm create vite@latest filter -- --template react-ts
 cd filter
 npm install redux react-redux nanoid
 npm run dev
-`
+```
 
 ## Функциональные требования
 
