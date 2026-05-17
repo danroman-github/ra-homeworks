@@ -27,3 +27,5 @@
 ### Блок 3. Redux — управление состоянием
 
 3.1 [Redux](/redux)
+
+3.2. [Redux Toolkit](/toolkit)
